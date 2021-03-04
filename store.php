@@ -79,7 +79,7 @@ $thedata = file_get_contents("data.json");
 //load all the json in an array of objects with each object representing a json entry
 $storedata = json_decode($thedata);
 
-//The following just makes pagination a little nicer.
+//The following is more pagination
 
 $thecount = count($storedata);
 
