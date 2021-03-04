@@ -12,7 +12,8 @@
 {
 	text-align: center;
 }
-body{
+body
+{
 	font-family: Arial, Helvetica, sans-serif;
 }
 .itemname
@@ -20,19 +21,9 @@ body{
 	color:darkblue;
 	font-weight: bold;
 }
-.desc
-{
-}
-.price
-{
-}
 .thecolor, .material
 {
 	font-size: 75%;
-
-}
-.material
-{
 }
 img
 {
@@ -45,12 +36,9 @@ img
 {
 	text-align: center;
 }
-#searchbox
-{
-}
 #searchbutton
 {
-margin-top: 5px;
+	margin-top: 5px;
 }
 </style>
 </head>
@@ -107,20 +95,7 @@ $thedata = file_get_contents("data.json");
 		echo "<div class=\"container\">Sorry, there were no results that matched your search.</div>";
 	}else{
 
- $prev=true;
- $next=true;
 
- if($pagstart==1)
-{
-	//no prev
-	$prev = false;
-}
-
-if($pagend == $rescount)
-{
-	//no next
-	$next = false;
-}
 $prevstart = $pagstart - 20;
 if($prevstart<1) $prevstart=1;
 $prevend = $prevstart + 19;
@@ -134,10 +109,6 @@ $nextstart = $nextend - 19;
 echo "<div class=\"col-sm\" style=\"text-align:center\">$pagstart - $pagend of $rescount <a href=\"search.php?start=$prevstart&end=$prevend&searchstring=$searchterm\">Prev</a>...
 <a href=\"search.php?start=$nextstart&end=$nextend&searchstring=$searchterm\">Next</a></div>";
  
- 
-
- 
-
 
  for($i = $pagstart-1; $i < $pagend; $i++)
  {

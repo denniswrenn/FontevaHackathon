@@ -20,19 +20,9 @@ body{
 	color:darkblue;
 	font-weight: bold;
 }
-.desc
-{
-}
-.price
-{
-}
 .thecolor, .material
 {
 	font-size: 75%;
-
-}
-.material
-{
 }
 img
 {
@@ -45,12 +35,9 @@ img
 {
 	text-align: center;
 }
-#searchbox
-{
-}
 #searchbutton
 {
-margin-top: 5px;
+	margin-top: 5px;
 }
 </style>
 </head>
@@ -71,19 +58,12 @@ margin-top: 5px;
 </form>
 <hr>
 <?php
+//this page displays an individual item
 
 include "functions.php";
 $thedata = file_get_contents("data.json");
 $storedata = json_decode($thedata);
- // for($i = 0; $i < count($storedata); $i++)
- // {
-	 // if(
-	 // strpos(strtolower($storedata[$i]->id), $_GET["id"]) !== false)	 {
-		// $resultarray[] = $storedata[$i];
-	 // }
- // }
 item($storedata[(int)$_GET["id"]]);
-//datapiece($storedata[$_GET["id"]);
 
  ?>
 </div>

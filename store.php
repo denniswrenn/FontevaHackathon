@@ -12,7 +12,8 @@
 {
 	text-align: center;
 }
-body{
+body
+{
 	font-family: Arial, Helvetica, sans-serif;
 }
 .itemname
@@ -20,19 +21,9 @@ body{
 	color:darkblue;
 	font-weight: bold;
 }
-.desc
-{
-}
-.price
-{
-}
 .thecolor, .material
 {
 	font-size: 75%;
-
-}
-.material
-{
 }
 img
 {
@@ -45,12 +36,9 @@ img
 {
 	text-align: center;
 }
-#searchbox
-{
-}
 #searchbutton
 {
-margin-top: 5px;
+	margin-top: 5px;
 }
 </style>
 </head>
@@ -73,7 +61,7 @@ margin-top: 5px;
 <?php
 include "functions.php";
 
-
+//The following is for pagination
 if(isset($_GET["start"]) && isset($_GET["end"]))
 {
 	$pagstart = $_GET["start"];
@@ -84,25 +72,19 @@ if(isset($_GET["start"]) && isset($_GET["end"]))
 	$pagend=20;
 }
 
+
+//load the data file into a variable
 $thedata = file_get_contents("data.json");
 
- $storedata = json_decode($thedata);
+//load all the json in an array of objects with each object representing a json entry
+$storedata = json_decode($thedata);
 
- $prev=true;
- $next=true;
- $thecount = count($storedata);
- if($pagstart==1)
-{
-	//no prev
-	$prev = false;
-}
+//The following just makes pagination a little nicer.
 
-if($pagend == $thecount)
-{
-	//no next
-	$next = false;
-}
+$thecount = count($storedata);
+
 $prevstart = $pagstart - 20;
+
 if($prevstart<1) $prevstart=1;
 $prevend = $prevstart + 19;
 
@@ -110,48 +92,48 @@ $nextend = $pagend + 20;
 if($nextend > $thecount) $nextend = $thecount;
 $nextstart = $nextend - 19;
 
- for($i = 0; $i < $thecount; $i++)
- {
+for($i = 0; $i < $thecount; $i++)
+{
+	//Go through the entire data set to get the different materials and colors to populate the search select boxes.
 	$mat[] = strtolower($storedata[$i]->attributes->material);
 	$col[] = $storedata[$i]->attributes->color;
- }
+}
+
+//There will be duplicate values because several items can be the same color or material 
+//We don't need duplicates so we'll get rid of them then clean up the array.
+$mat = array_unique($mat);
+$mat = array_values($mat);
  
- $mat = array_unique($mat);
- $mat = array_values($mat);
-//  print_r($mat);
- // echo "<BR><BR>";
- 
- $col = array_unique($col);
+$col = array_unique($col);
 $col= array_values($col);
- // print_r($col);
- // echo "<BR><BR>";
+
+/* *** This part of the search is not finished and has not been thoroughly thought out. ***
 echo "<div class=\"container\"> Filter by color: ";
- echo "<select 	name=\"color\">";
+echo "<select 	name=\"color\">";
  
- for($i = 0; $i < count($col); $i++)
- {
-	 echo "<option value=\"" . $col[$i] . "\">". $col[$i] . "</option>";
- }
- echo "</select>";
- echo " or material: <select 	name=\"material\">";
+for($i = 0; $i < count($col); $i++)
+{//list colors for the search
+	echo "<option value=\"" . $col[$i] . "\">". $col[$i] . "</option>";
+}
+echo "</select>";
+echo " or material: <select 	name=\"material\">";
 
- for($i = 0; $i < count($mat); $i++)
- {
+for($i = 0; $i < count($mat); $i++)
+{//list materials for the search
 	 echo "<option value=\"" . $mat[$i] . "\">". $mat[$i] . "</option>";	 
- }
- echo "</select>";
+}
+echo "</select>";
 echo "</div>";
-
+*/
 echo "<div class=\"col-sm\" style=\"text-align:center\">$pagstart - $pagend of $thecount  <a href=\"store.php?start=$prevstart&end=$prevend\">Prev</a>...
 <a href=\"store.php?start=$nextstart&end=$nextend\">Next</a></div>";
 
 
 
- for($i = $pagstart-1; $i < $pagend; $i++)
- {
-	
+for($i = $pagstart-1; $i < $pagend; $i++)
+{	
 	datapiece($storedata[$i]);
- }
+}
  
  echo "<div class=\"col-sm\" style=\"text-align:center\">$pagstart - $pagend of $thecount  <a href=\"store.php?start=$prevstart&end=$prevend\">Prev</a>...
 <a href=\"store.php?start=$nextstart&end=$nextend\">Next</a></div>";
